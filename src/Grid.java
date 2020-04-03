@@ -36,11 +36,19 @@ public final class Grid {
         StringBuilder sb = new StringBuilder();
         for(int y = sizeY-1; y >= 0; --y) {
             for(int x = 0; x<sizeX; ++x) {
-                sb.append(grid[x][y].toString());
+                sb.append(grid[x][y].toString()).append(" ");
             }
             sb.append("\n");
         }
         return sb.toString();
         
+    }
+    
+    public int getBorderX() {
+        return sizeX;
+    }
+    
+    public int getBorderY() {
+        return sizeY;
     }
 }

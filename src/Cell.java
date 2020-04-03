@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.tools.doclint.Entity;
-
 public final class Cell {
     private final int x;
     private final int y;
@@ -25,15 +23,16 @@ public final class Cell {
     }
     
     public boolean canEnter(Entity entity) {
-        for(Entity entity: entities) {
-            if(entity.takeCellSpace()) {
+        
+        for(Entity e: entities) {
+            if(e.takeCellSpace()) {
                 return false;
             }
         }
-        return true;
+        return entities.isEmpty() ? true : !entity.takeCellSpace() ;
     }
     
-    public boolean addEntity(Interactables e) {
+    public boolean addEntity(Entity e) {
         if(canEnter(e)){
             entities.add(e);
             return true;
@@ -49,8 +48,10 @@ public final class Cell {
         return false;
     }
     
-   public void applyToAll() {
-       
+   public void update() {
+       for(Entity e: entities) {
+           e.update();
+       }
    }
    
    public boolean canLeave(Entity e) {
@@ -59,7 +60,7 @@ public final class Cell {
    
    @Override
    public String toString() {
-       entities.get(0).toString();
+       return entities.isEmpty() ? "." : entities.get(0).toString();
    }
 
     

@@ -15,7 +15,7 @@ public final class Grid {
         grid = new Cell[sizeX][sizeY];
         for(int x = 0; x<sizeX; ++x) {
             for(int y = 0; y < sizeY; ++y) {
-                grid[x][y] = new Cell(x,y);
+                grid[x][y] = new Cell(x,y, this);
             }
         }
     }

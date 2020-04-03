@@ -23,5 +23,10 @@ public final class Cell {
     public void addEntity(MovableEntity e) {
         movableEntities.add(e);
     }
+    
+    public void removeEntity(MovableEntity e) {
+        movableEntities.remove(e);
+    }
 
+    
 }

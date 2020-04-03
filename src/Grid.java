@@ -24,6 +24,14 @@ public final class Grid {
         return grid[x][y];
     }
     
+    public void update() {
+        for(int x = 0; x<sizeX; ++x) {
+            for(int y = 0; y < sizeY; ++y) {
+                grid[x][y].update();
+            }
+        }
+    }
+    
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for(int y = sizeY-1; y >= 0; --y) {

@@ -1,8 +1,16 @@
+import java.util.ArrayList;
+import java.util.List;
 
-public class HealtyEntity implements MouvableEntity {
+public class HealtyEntity extends MovableEntity {
 
-    public HealtyEntity() {
-        // TODO Auto-generated constructor stub
+    private final int x;
+    private final int y;
+    
+    private List<MovableEntity> movableEntities = new ArrayList<>();
+    
+    public HealtyEntity(int posX, int posY) {
+        x = posX;
+        y = posY;
     }
 
 }

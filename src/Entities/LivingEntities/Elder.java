@@ -2,7 +2,6 @@ package Entities.LivingEntities;
 import java.util.Random;
 
 import Entities.House;
-import Entities.LivingEntities.Human.Action;
 import GameEnvironment.Grid;
 
 public class Elder extends Human {
@@ -10,6 +9,10 @@ public class Elder extends Human {
     private final static float INFECTION_PROBABILITY=0.5f; 
     private final static float MAX_VIRUS_QUANTITY=100.0f; 
     private final static float VIRUS_INCREASE=1.04f; 
+    private final static int DISTANCE_PER_MOVE=1; 
+    
+    private final static int TIME_TO_STROLL=100;
+    private final static int TIME_GO_HOME=170;
 
     public Elder(int x, int y, Grid aera,boolean infected, House home) {
         super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY, home);  
@@ -30,32 +33,38 @@ public class Elder extends Human {
 
     @Override
     public void update(int time) {
-        globalMove();  
+        
+        move(); 
         spreadInfection();
         updateInfection();
         
         if(super.needToGoToHospital()) {
-            super.giveNewActions(Action.GT_HOSPITAL);
-        }else  if(!super.isInfected()) {
+            super.giveNewAction(Action.GT_HOSPITAL);
+        }else  if(!inHospital()) {
             switch(time) {
-            case 100:
-                super.giveNewActions(Action.STROLL);
+            case TIME_TO_STROLL:
+                super.giveNewAction(Action.STROLL);
                 break;
-            case 170:
-                super.giveNewActions(Action.GT_HOME);
+            case TIME_GO_HOME:
+                super.giveNewAction(Action.GT_HOME);
                 break;
             }
         }
     }
 
     @Override
-    public int getDistanceByMove() {
-        return 1;
+    public int getDistancePerMove() {
+        return DISTANCE_PER_MOVE;
     }
 
     @Override
-    public void goalAchieved() {
-        super.giveNewActions(Action.STAY);
+    public void goalHasBeenReached() {
+        
+        if(getCurrentAction()==Action.GT_HOSPITAL) {
+            super.giveNewAction(Action.STAY_AT_HOSPITAL);
+        }
+        
+        super.giveNewAction(Action.STAY);
     }
 
 
@@ -68,15 +77,31 @@ public class Elder extends Human {
     }
 
     @Override
-    public void specificAction(Action a) {
+    public boolean giveSpecificAction(Action a) {
         switch(a) {
-        case STROLL:
+        case STROLL:{
             int x = new Random().nextInt(super.getGrid().getBorderX());
             int y = new Random().nextInt(super.getGrid().getBorderY());
-            super.setGoal(x, y); 
-            break;
+            super.setGoalPosition(x, y);
+            super.setCurrentAction(a); 
+            return true;
+            }
+            default:{
+                return false;
+            }
         }
-        
     }
 
+    @Override
+    public boolean moveSpecific(Action a) {
+        switch(a) {
+            case STROLL:{
+                moveTowardsGoal();
+                return true;
+            }
+            default: {
+                return false;
+            }
+        }
+    }
 }

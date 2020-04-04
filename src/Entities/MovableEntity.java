@@ -9,20 +9,32 @@ public abstract class MovableEntity extends Entity {
    
     private static final int NUMBER_TRIAL_RANDOM_MOVE = 5;
     
-    private Dir direction = Dir.LEFT;
+    private Dir direction;
     private int goalX;
     private int goalY;
-    private boolean isFollowingAGoal = false;
 
     public MovableEntity(int x, int y, Grid aera) {
         super(x, y, aera);
         goalX = x;
         goalX = y; 
+        this.direction=Dir.LEFT;
     }
         
-    public abstract int getDistanceByMove();
+    /**
+     * @return the number of steps a movable entity can execute in one turn
+     */
+    public abstract int getDistancePerMove();
             
-    public abstract void goalAchieved();
+    /**
+     * Method that is called when a goal has been reached
+     */
+    public abstract void goalHasBeenReached();
+    
+    //Might be useless
+    /**
+     * @return true if the movable entity needs to move to reach a goal
+     */
+    //public abstract boolean needsToReachGoal();
     
 
     public static enum Dir{
@@ -30,22 +42,18 @@ public abstract class MovableEntity extends Entity {
     }
     
     /**
-     * Move the entity depending on if the entity is following a goal or not
+     * Moves the entity towards its goal by number of steps it is allowed in a move
      * Must be called by Update
      */
-    public void globalMove() {
-        for(int i = 0; i <getDistanceByMove(); ++i) {
-            if(isFollowingAGoal) {
-                if(moveTowardGoal()) {
-                    isFollowingAGoal = false;
-                    goalAchieved();
-                    return;
-                }
-            }
-            
+    public void moveTowardsGoal() {
+        for(int i = 0; i <getDistancePerMove(); ++i) {
+            moveOneStepTowardsGoal();
+            if(hasReachedGoal()) {
+                goalHasBeenReached();
+                return;
+            }  
         }
     }
-    
     
     /**
      * Move to x,y if permitted
@@ -53,7 +61,7 @@ public abstract class MovableEntity extends Entity {
      * @param y
      * @return if the move was possible
      */
-    public boolean moveTo(int x, int y) {
+    private boolean moveTo(int x, int y) {
         if(super.getGrid().isInBorder(x, y)) {
             Cell oldC = super.getCurrCell();
             Cell newC = super.getGrid().getCell(x, y);
@@ -72,60 +80,69 @@ public abstract class MovableEntity extends Entity {
     }
     
     /**
-     * Move toward goal (if not goal set, move toward birth place)
-     * @return true if already reached the goal
+     * Move toward goal 
+     * @return true if a move was made
      */
-    public boolean moveTowardGoal() {        
-        int absDiffX = Math.abs(goalX - super.getPosX());
-        int absDiffY = Math.abs(goalY - super.getPosY());
-        if(absDiffX == 0 && absDiffY ==0) {
-            return true;
+    private boolean moveOneStepTowardsGoal() {     
+        System.out.println("Move one step towards goal at coordinates:(x,y)=(" +getGoalX()+ ","+getGoalY()+")");
+        int distRemainingX = Math.abs(goalX - super.getPosX());
+        int distRemainingY = Math.abs(goalY - super.getPosY());
+        if(distRemainingX == 0 && distRemainingY ==0) {
+            return false;
         }
         
         boolean hasMoved = false;
-        if(absDiffX > absDiffY) {
-            if(goalX - super.getPosX() > 0) {
-                direction = Dir.RIGHT;
-                hasMoved= moveTowardDir();
-            }else if(absDiffX != 0){
-                direction = Dir.LEFT;
-                hasMoved= moveTowardDir();
+        if(distRemainingX > distRemainingY) {
+            if(goalX > super.getPosX()) {
+                direction = Dir.RIGHT;//TODO:DELETE
+                hasMoved= moveTowardDir(Dir.RIGHT);
+            }else if(goalX <  super.getPosX()){
+                direction = Dir.LEFT;//TODO:DELETE
+                hasMoved= moveTowardDir(Dir.LEFT);
             }
         } 
         
-        if(!hasMoved) {
-            if(goalY - super.getPosY() > 0) {
-                direction = Dir.UP;
-                hasMoved= moveTowardDir();
-            }else if(absDiffY != 0){
-                direction = Dir.DOWN;
-                hasMoved= moveTowardDir();
+        if(!hasMoved && distRemainingY!=0) {
+            if(goalY > super.getPosY()) {
+                direction = Dir.UP;//TODO:DELETE
+                hasMoved= moveTowardDir(Dir.UP);
+            }else if(goalY < super.getPosY()){
+                direction = Dir.DOWN;//TODO:DELETE
+                hasMoved= moveTowardDir(Dir.DOWN);
             }
         }
-        return false;
+        return hasMoved;
     }
     
     /**
      * Set a goal
      * @param x
      * @param y
-     * @return true if location in the grid
+     * @return true if goal location in the grid
      */
-    public boolean setGoal(int x, int y) {
+    public boolean setGoalPosition(int x, int y) {
         if(super.getGrid().isInBorder(x, y)) {
            goalX = x;
            goalY = y;
-           isFollowingAGoal = true;
            return true;
         }
        return false;
      }
     
+    public int getGoalX() {
+        return goalX;
+    }
+    
+    public int getGoalY() {
+        return goalY;
+    }
+    
+    
     /**
      * Move along the direction
      * @return
      */
-    public boolean moveTowardDir() {
+    private boolean moveTowardDir(Dir direction) {
         switch(direction) {
         case UP:    return moveTo(super.getPosX(), super.getPosY()+1);
         case DOWN:  return moveTo(super.getPosX(), super.getPosY()-1);
@@ -144,8 +161,9 @@ public abstract class MovableEntity extends Entity {
         int numberOfTrial = NUMBER_TRIAL_RANDOM_MOVE;
         while(!hasMoved && numberOfTrial > 0) {
             int i = new Random().nextInt(Dir.values().length);
-            direction = Dir.values()[i];
-            hasMoved = moveTowardDir();
+            Dir direction = Dir.values()[i];
+            hasMoved = moveTowardDir(direction);
+            this.direction=direction;//TODO:DELETE
         }
        return hasMoved;
     }
@@ -157,8 +175,11 @@ public abstract class MovableEntity extends Entity {
     public void setDirection(Dir direction) {
         this.direction = direction;
     }
-
-    public void setIsFollowingAGoal(boolean b) {
-        isFollowingAGoal = b;
+    
+    /**
+     * @return true if the entity is on its goal position
+     */
+    public boolean hasReachedGoal() {
+        return goalX==super.getPosX() && goalY ==super.getPosY();
     }
 }

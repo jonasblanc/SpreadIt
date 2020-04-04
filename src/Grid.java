@@ -44,12 +44,20 @@ public final class Grid {
     
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        for(int x = 0; x<sizeX; ++x) {
+            sb.append("**");
+        }
+        sb.append("**\n*");
         for(int y = sizeY-1; y >= 0; --y) {
             for(int x = 0; x<sizeX; ++x) {
                 sb.append(grid[x][y].toString()).append(" ");
             }
-            sb.append("\n");
+            sb.append("*\n*");
         }
+        for(int x = 0; x<sizeX; ++x) {
+            sb.append("**");
+        }
+        sb.append("*");
         return sb.toString();
         
     }

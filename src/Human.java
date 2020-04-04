@@ -26,7 +26,7 @@ public abstract class Human extends MovableEntity implements Infectable{
     public boolean infect(boolean forced) {
         
        //Generate random number between 0(inclusive) and 100 (exclusive)for probability 
-       if(forced || new Random().nextInt(100)<infectionProbability) {
+       if(forced || ((float)new Random().nextInt(100))/100<infectionProbability) {
            virusQuantity=maxVirusQuantity/2;
        }
        return isInfected();
@@ -43,7 +43,7 @@ public abstract class Human extends MovableEntity implements Infectable{
             adjacentEntities.remove(this);
             for(Entity e:adjacentEntities) {
                 if(e instanceof Infectable) {
-                    ((Infectable) e).infect(true);
+                    ((Infectable) e).infect(false);
                 }
             }
         }
@@ -68,7 +68,7 @@ public abstract class Human extends MovableEntity implements Infectable{
         
         if(isDead()) {
             System.out.println("I DIED");
-            removeEntity();
+            //removeEntity();
         }
     }
     

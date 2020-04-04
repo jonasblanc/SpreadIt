@@ -2,6 +2,7 @@ import java.util.Random;
 
 public abstract class MovableEntity extends Entity {
    
+    private static final int NUMBER_TRIAL_RANDOM_MOVE = 5;
     
     private Dir direction = Dir.LEFT;
     private int goalX;
@@ -13,12 +14,9 @@ public abstract class MovableEntity extends Entity {
         goalX = x;
         goalX = y; 
     }
-    
-    
+        
     public abstract int getDistanceByMove();
-    
-    public abstract void getInfect();
-    
+        
     public abstract void moveWhenNotFollowingAGoal();
     
     public abstract void goalAchived(int x, int y);
@@ -136,10 +134,19 @@ public abstract class MovableEntity extends Entity {
         }
     }
     
+    /**
+     * Move in a random direction
+     * @return true if movement was a success
+     */
     public boolean randomMove() {
-        int i = new Random().nextInt(Dir.values().length);
-        direction = Dir.values()[i];
-        return moveTowardDir();
+        boolean hasMoved = false;
+        int numberOfTrial = NUMBER_TRIAL_RANDOM_MOVE;
+        while(!hasMoved && numberOfTrial > 0) {
+            int i = new Random().nextInt(Dir.values().length);
+            direction = Dir.values()[i];
+            hasMoved = moveTowardDir();
+        }
+       return hasMoved;
     }
     
     public Dir getDirection() {

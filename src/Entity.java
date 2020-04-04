@@ -12,6 +12,11 @@ public abstract class Entity {
         this.area = area;
         setCurrCell(area.getCell(x, y));
     }
+    
+    public void removeEntity() {
+        area.removeEntity(this);
+        currCell.removeEntity(this);
+    }
 
     public abstract boolean takeCellSpace();
     

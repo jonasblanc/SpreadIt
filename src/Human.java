@@ -15,8 +15,7 @@ public abstract class Human extends MovableEntity implements Infectable{
         this.infectionProbability=infectionProbability;
         this.virusQuantity=0;
         this.maxVirusQuantity=maxVirusQuantity;
-        this.virusQuantity=virusQuantity;
-        
+        this.virusQuantity=0;
     }
     
     @Override

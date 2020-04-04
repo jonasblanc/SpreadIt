@@ -1,4 +1,5 @@
 
+import Entities.Hospital;
 import Entities.House;
 import Entities.WorkPlace;
 import Entities.LivingEntities.Adult;
@@ -12,6 +13,10 @@ public final class Main {
     public static void main(String[] args) {
         
         Grid g = new Grid(10, 10);
+        
+        Hospital hospital = new Hospital(9,0,g,5,2);
+        g.getCell(9,0).addEntity(hospital);
+        g.addEntity(hospital);
         
         WorkPlace wk = new WorkPlace(5,4,g,6);
         g.getCell(5,4).addEntity(wk);

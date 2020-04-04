@@ -14,10 +14,6 @@ public final class Hospital extends Buildings {
         this.healPower = constrainHealPower(healPower);
     }
     
-    public int numberOfPatients() {
-        return getCurrCell().getNumberOfEntities()-1;//Remove the hospital of the count
-    }
-
     @Override
     public boolean takeCellSpace() {
         return isFull();

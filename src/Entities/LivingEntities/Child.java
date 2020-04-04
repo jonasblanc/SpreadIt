@@ -35,7 +35,7 @@ public final class Child  extends Human {
         updateInfection();
         if(super.needToGoToHospital()) {
             super.giveNewActions(Action.GT_HOSPITAL);
-        }else {
+        }else if(!super.isInfected()) {
             switch(time) {
             case 90:
                 super.giveNewActions(Action.PLAY);

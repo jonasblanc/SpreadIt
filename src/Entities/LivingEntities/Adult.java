@@ -38,7 +38,7 @@ public final class Adult extends Human {
         
         if(super.needToGoToHospital()) {
             super.giveNewActions(Action.GT_HOSPITAL);
-        }else {
+        }else if(!super.isInfected()) {
             switch(time) {
             case 80:
                 super.giveNewActions(Action.GT_WORK);

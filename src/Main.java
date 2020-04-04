@@ -4,6 +4,7 @@ import Entities.House;
 import Entities.WorkPlace;
 import Entities.LivingEntities.Adult;
 import Entities.LivingEntities.Child;
+import Entities.LivingEntities.Elder;
 import GameEnvironment.Grid;
 
 public final class Main {
@@ -14,7 +15,7 @@ public final class Main {
         
         Grid g = new Grid(10, 10);
         
-        Hospital hospital = new Hospital(9,0,g,5,2);
+        Hospital hospital = new Hospital(9,0,g,5,4);
         g.getCell(9,0).addEntity(hospital);
         g.addEntity(hospital);
         
@@ -48,19 +49,25 @@ public final class Main {
         g.getCell(0,9).addEntity(c2);
         g.addEntity(c2);
         
+        Elder e = new Elder(0,9,g,false, h1);
+        g.getCell(0,9).addEntity(e);
+        g.addEntity(e);
+        
         long lastTime = System.nanoTime();
         int time = 0;
+        int day = 0;
         while(true) {
             
             long currentTime = System.nanoTime();
             if(currentTime-lastTime > TIME_TRESHOLD) {
-                System.out.println(time);
+                System.out.println("Day: "+ day + " Time: "+time);
                 System.out.println(g.toString());
                 g.update(time);
                 lastTime = currentTime;
                 time ++;
                 if(time == 241) {
                     time = 0;
+                    day++;
                 }
             }
            

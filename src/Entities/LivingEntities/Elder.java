@@ -36,7 +36,7 @@ public class Elder extends Human {
         
         if(super.needToGoToHospital()) {
             super.giveNewActions(Action.GT_HOSPITAL);
-        }else {
+        }else  if(!super.isInfected()) {
             switch(time) {
             case 100:
                 super.giveNewActions(Action.STROLL);

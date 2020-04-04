@@ -1,4 +1,7 @@
 package Entities.LivingEntities;
+import java.util.Random;
+
+import Entities.House;
 import GameEnvironment.Grid;
 
 public final class Adult extends Human {
@@ -7,12 +10,15 @@ public final class Adult extends Human {
     private final static float MAX_VIRUS_QUANTITY=100.0f; 
     private final static float VIRUS_INCREASE=1.25f; 
     
+    private final WorkPlace workPlace;
     
-    public Adult(int x, int y, Grid aera, boolean infected) {
-        super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY);  
+    
+    public Adult(int x, int y, Grid aera, boolean infected, House home, WorkPlace wp) {
+        super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY, home);  
         if(infected) {
             infect(true);
         }
+        workPlace = wp;
     }
 
     @Override
@@ -26,10 +32,24 @@ public final class Adult extends Human {
     }
 
     @Override
-    public void update() {
+    public void update(int time) {
         globalMove();
         spreadInfection();
         updateInfection();
+        if(super.needToGoToHospital()) {
+            super.giveNewActions(Action.GT_HOSPITAL);
+        }else {
+            switch(time) {
+            case 80:
+                super.giveNewActions(Action.GT_WORK);
+                break;
+            case 180:
+                super.giveNewActions(Action.GT_HOME);
+                break;
+            }
+        }
+       
+        
     }
 
     @Override
@@ -39,13 +59,14 @@ public final class Adult extends Human {
 
     @Override
     public void moveWhenNotFollowingAGoal() {
-       
-        randomMove();
+        int x = new Random().nextInt(super.getGrid().getBorderX());    
+        int y = new Random().nextInt(super.getGrid().getBorderX());    
+        setGoal(x,y);
     }
 
     @Override
-    public void goalAchived(int x, int y) {
-        //Do nothing for now
+    public void goalAchived() {
+        super.giveNewActions(Action.STAY);
     }
 
     /*@Override
@@ -59,6 +80,17 @@ public final class Adult extends Human {
         if(isInfected()) {
             increaseVirus(VIRUS_INCREASE);
         }
+    }
+
+    @Override
+    public void specificAction(Action a) {
+        switch(a) {
+        case GT_WORK:
+            super.setGoal(workPlace.getPosX(), workPlace.getPosY()); break;
+        default:
+            break;
+        }
+        return;
     }
 
 }

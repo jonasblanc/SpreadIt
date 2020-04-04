@@ -1,4 +1,5 @@
 package Entities.LivingEntities;
+import Entities.House;
 import GameEnvironment.Grid;
 
 public class Elder extends Human {
@@ -7,8 +8,8 @@ public class Elder extends Human {
     private final static float MAX_VIRUS_QUANTITY=100.0f; 
     private final static float VIRUS_INCREASE=1.25f; 
 
-    public Elder(int x, int y, Grid aera,boolean infected) {
-        super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY);  
+    public Elder(int x, int y, Grid aera,boolean infected, House home) {
+        super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY, home);  
         if(infected) {
             infect(true);
         }
@@ -25,7 +26,7 @@ public class Elder extends Human {
     }
 
     @Override
-    public void update() {
+    public void update(int time) {
         globalMove();  
         spreadInfection();
         updateInfection();
@@ -42,7 +43,7 @@ public class Elder extends Human {
     }
 
     @Override
-    public void goalAchived(int x, int y) {
+    public void goalAchived() {
         // TODO Auto-generated method stub
     }
 
@@ -59,6 +60,12 @@ public class Elder extends Human {
         if(isInfected()) {
             increaseVirus(VIRUS_INCREASE);
         }
+        
+    }
+
+    @Override
+    public void specificAction(Action a) {
+        // TODO Auto-generated method stub
         
     }
 

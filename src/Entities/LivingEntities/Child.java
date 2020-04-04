@@ -1,6 +1,6 @@
 package Entities.LivingEntities;
-import java.util.Random;
 
+import Entities.House;
 import GameEnvironment.Grid;
 
 
@@ -11,8 +11,8 @@ public final class Child  extends Human {
     private final static float MAX_VIRUS_QUANTITY=100.0f; 
     private final static float VIRUS_INCREASE=1.05f; 
 
-    public Child(int x, int y, Grid aera, boolean infected) {
-        super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY);  
+    public Child(int x, int y, Grid aera, boolean infected, House home) {
+        super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY, home);  
         if(infected) {
             infect(true);
         }
@@ -29,10 +29,22 @@ public final class Child  extends Human {
     }
 
     @Override
-    public void update() { 
+    public void update(int time) { 
         globalMove();
         spreadInfection();
         updateInfection();
+        if(super.needToGoToHospital()) {
+            super.giveNewActions(Action.GT_HOSPITAL);
+        }else {
+            switch(time) {
+            case 90:
+                super.giveNewActions(Action.PLAY);
+                break;
+            case 180:
+                super.giveNewActions(Action.GT_HOME);
+                break;
+            }
+        }
     }
  
 
@@ -43,14 +55,12 @@ public final class Child  extends Human {
 
     @Override
     public void moveWhenNotFollowingAGoal() {
-        int x = new Random().nextInt(super.getGrid().getBorderX());    
-        int y = new Random().nextInt(super.getGrid().getBorderX());    
-        setGoal(x,y);
+        randomMove();
     }
 
     @Override
-    public void goalAchived(int x, int y) {
-        //Do nothing yet
+    public void goalAchived() {
+       super.giveNewActions(Action.STAY);
     }
 
     /* 
@@ -68,6 +78,16 @@ public final class Child  extends Human {
     public void updateInfection() {
         if(isInfected()) {
             increaseVirus(VIRUS_INCREASE);
+        }
+        
+    }
+
+    @Override
+    public void specificAction(Action a) {
+        switch(a) {
+        case PLAY:
+            super.setIsFollowingAGoal(false);
+            super.setCurrentAction(Action.PLAY);
         }
         
     }

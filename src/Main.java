@@ -1,5 +1,5 @@
 
-import GameEnvironnement.Grid;
+import GameEnvironment.Grid;
 import Entities.LivingEntities.Adult;
 import Entities.LivingEntities.Child;
 import Entities.LivingEntities.Elder;

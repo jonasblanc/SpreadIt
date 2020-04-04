@@ -1,5 +1,5 @@
 package Entities;
-import GameEnvironnement.Grid;
+import GameEnvironment.Grid;
 
 public abstract class Buildings extends Entity{
 

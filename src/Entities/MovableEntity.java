@@ -2,8 +2,8 @@ package Entities;
 
 import java.util.Random;
 
-import GameEnvironnement.Cell;
-import GameEnvironnement.Grid;
+import GameEnvironment.Cell;
+import GameEnvironment.Grid;
 
 public abstract class MovableEntity extends Entity {
    

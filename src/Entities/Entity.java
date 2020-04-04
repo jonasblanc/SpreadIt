@@ -1,6 +1,6 @@
 package Entities;
-import GameEnvironnement.Cell;
-import GameEnvironnement.Grid;
+import GameEnvironment.Cell;
+import GameEnvironment.Grid;
 
 public abstract class Entity {
 

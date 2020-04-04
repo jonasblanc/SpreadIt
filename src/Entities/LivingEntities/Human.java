@@ -5,7 +5,7 @@ import java.util.Set;
 import Entities.Entity;
 import Entities.Infectable;
 import Entities.MovableEntity;
-import GameEnvironnement.Grid;
+import GameEnvironment.Grid;
 
 public abstract class Human extends MovableEntity implements Infectable{
 

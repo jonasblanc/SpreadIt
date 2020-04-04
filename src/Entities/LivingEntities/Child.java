@@ -1,7 +1,7 @@
 package Entities.LivingEntities;
 import java.util.Random;
 
-import GameEnvironnement.Grid;
+import GameEnvironment.Grid;
 
 
 

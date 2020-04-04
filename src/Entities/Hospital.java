@@ -1,5 +1,5 @@
 package Entities;
-import GameEnvironnement.Grid;
+import GameEnvironment.Grid;
 
 public final class Hospital extends Buildings {
 

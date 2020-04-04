@@ -1,5 +1,5 @@
 package Entities.LivingEntities;
-import GameEnvironnement.Grid;
+import GameEnvironment.Grid;
 
 public final class Adult extends Human {
     

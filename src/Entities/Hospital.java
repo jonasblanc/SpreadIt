@@ -6,7 +6,7 @@ public final class Hospital extends Buildings {
 
     //In this case, the worst hospitals do not modify the 
     public final static int MAX_HEAL_POWER = 100;
-    public final static int MIN_HEAL_POWER = 1;
+    public final static int MIN_HEAL_POWER = 0;
     private float healPower;
     
     public Hospital(int x, int y, Grid area, int capacity, float healPower){
@@ -32,7 +32,7 @@ public final class Hospital extends Buildings {
     public void update(int time) {
         
         for( Human human : getCurrCell().getHumans()) {
-            human.increaseVirus(1.0f/healPower);
+            human.increaseVirus(1.0f-(float)healPower/MAX_HEAL_POWER);
         }
     }
     

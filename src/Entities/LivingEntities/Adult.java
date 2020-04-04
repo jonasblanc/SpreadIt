@@ -1,6 +1,4 @@
 package Entities.LivingEntities;
-import java.util.Random;
-
 import Entities.House;
 import Entities.WorkPlace;
 import GameEnvironment.Grid;
@@ -9,7 +7,7 @@ public final class Adult extends Human {
     
     private final static float INFECTION_PROBABILITY=0.5f; 
     private final static float MAX_VIRUS_QUANTITY=100.0f; 
-    private final static float VIRUS_INCREASE=1.25f; 
+    private final static float VIRUS_INCREASE=1.02f; 
     
     private final WorkPlace workPlace;
     

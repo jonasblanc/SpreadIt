@@ -9,7 +9,7 @@ public final class Child  extends Human {
     
     private final static float INFECTION_PROBABILITY=0.25f; 
     private final static float MAX_VIRUS_QUANTITY=100.0f; 
-    private final static float VIRUS_INCREASE=1.05f; 
+    private final static float VIRUS_INCREASE=1.01f; 
 
     public Child(int x, int y, Grid aera, boolean infected, House home) {
         super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY, home);  

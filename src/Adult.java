@@ -1,15 +1,10 @@
-
 public final class Adult extends Human {
-
-    public Adult(int x, int y, Grid aera) {
-        super(x, y, aera);
-        super.setGoal(9,9);
-    }
-
-    @Override
-    public void getInfect() {
-        // TODO Auto-generated method stub
-        
+    
+    public Adult(int x, int y, Grid aera, boolean isInfected) {
+        super(x, y, aera, 0.5f, 100.0f);  
+        if(isInfected) {
+            infect(true);
+        }
     }
 
     @Override
@@ -19,7 +14,7 @@ public final class Adult extends Human {
 
     @Override
     public String toString() {
-        return "A";
+        return isInfected() ? "a":"A";
     }
 
     @Override
@@ -67,6 +62,24 @@ public final class Adult extends Human {
     @Override
     public void goalAchived(int x, int y) {
         //Do nothing for now
+    }
+
+    /* 
+     * 
+     */
+    @Override
+    public void spreadInfection() {
+        
+    }
+
+    /* 
+     * 
+     */
+    @Override
+    public void updateInfection() {
+        if(isInfected()) {
+            increaseVirus(1.25f);
+        }
     }
 
 }

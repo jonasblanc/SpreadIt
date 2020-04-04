@@ -21,7 +21,7 @@ public class Wall extends Entity{
 
     @Override
     public String toString() {
-        return "W";
+        return "*";
     }
 
 

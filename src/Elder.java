@@ -26,6 +26,7 @@ public class Elder extends Human {
     public void update() {
         globalMove();  
         spreadInfection();
+        updateInfection();
     }
 
     @Override

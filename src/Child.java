@@ -4,7 +4,7 @@ import java.util.Random;
 
 public final class Child  extends Human {
     
-    private final static float INFECTION_PROBABILITY=0.1f; 
+    private final static float INFECTION_PROBABILITY=0.25f; 
     private final static float MAX_VIRUS_QUANTITY=100.0f; 
     private final static float VIRUS_INCREASE=1.05f; 
 
@@ -29,6 +29,7 @@ public final class Child  extends Human {
     public void update() { 
         globalMove();
         spreadInfection();
+        updateInfection();
     }
  
 

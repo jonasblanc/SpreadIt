@@ -26,6 +26,7 @@ public final class Adult extends Human {
     public void update() {
         globalMove();
         spreadInfection();
+        updateInfection();
     }
 
     @Override

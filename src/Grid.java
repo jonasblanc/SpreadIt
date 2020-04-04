@@ -1,5 +1,6 @@
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class Grid {
 
@@ -8,6 +9,8 @@ public final class Grid {
     private final int sizeY;
     
     private Set<Entity> gridEntities = new HashSet<>();
+    
+    private Set<Entity> toDelete = new HashSet<>();
     
     public Grid(int sizeX, int sizeY) {
         this.sizeX = sizeX;
@@ -32,15 +35,29 @@ public final class Grid {
         for(Entity e : gridEntities) {
             e.update();
         }
-        
-        /*
-        for(int x = 0; x<sizeX; ++x) {
-            for(int y = 0; y < sizeY; ++y) {
-                grid[x][y].update();
+        gridEntities.removeAll(toDelete);
+        toDelete.clear();
+    }
+    
+    private int distance(int x1, int y1, int x2, int y2) {
+        return Math.abs(x1- x2) + Math.abs(y1- y2);
+    }
+    
+    public Hospital getNearestHospital(int x, int y) {
+        Set<Entity> es=  gridEntities.stream().filter(e -> e instanceof Hospital).collect(Collectors.toSet());
+        int minDIst = sizeX + sizeY + 1;
+        Hospital nearestHospital = null;
+        for(Entity e: es) {
+            int dist = distance(x, y, e.getPosX(), e.getPosY());
+            if(dist < minDIst) {
+                minDIst = dist;
+                nearestHospital = (Hospital) e;
             }
         }
-        */
+        return nearestHospital;
     }
+    
+    
     
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -80,5 +97,9 @@ public final class Grid {
     
     public boolean isInBorder(int x, int y) {
         return (0 <= x && x < sizeX && 0 <= y && y < sizeY);
+    }
+    
+    public void addEntityToDelete(Entity e) {
+        toDelete.add(e);
     }
 }

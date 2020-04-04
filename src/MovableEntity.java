@@ -24,7 +24,7 @@ public abstract class MovableEntity extends Entity {
 
     public static enum Dir{
         UP, DOWN, LEFT, RIGHT
-    }    
+    }
     
     /**
      * Move the entity depending on if the entity is following a goal or not

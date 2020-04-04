@@ -1,8 +1,15 @@
 
 public class Elder extends Human {
+    
+    private final static float INFECTION_PROBABILITY=0.5f; 
+    private final static float MAX_VIRUS_QUANTITY=100.0f; 
+    private final static float VIRUS_INCREASE=1.25f; 
 
-    public Elder(int x, int y, Grid aera) {
-        super(x, y, aera);
+    public Elder(int x, int y, Grid aera,boolean infected) {
+        super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY);  
+        if(infected) {
+            infect(true);
+        }
     }
 
     @Override
@@ -12,12 +19,13 @@ public class Elder extends Human {
 
     @Override
     public String toString() {
-        return "E";
+        return isInfected() ?"e":"E";
     }
 
     @Override
     public void update() {
-        globalMove();     
+        globalMove();  
+        spreadInfection();
     }
 
     @Override
@@ -33,6 +41,22 @@ public class Elder extends Human {
     @Override
     public void goalAchived(int x, int y) {
         // TODO Auto-generated method stub
+    }
+
+    /*
+    @Override
+    public void spreadInfection() {}
+    */
+    
+    /* 
+     * 
+     */
+    @Override
+    public void updateInfection() {
+        if(isInfected()) {
+            increaseVirus(VIRUS_INCREASE);
+        }
+        
     }
 
 }

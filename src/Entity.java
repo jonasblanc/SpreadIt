@@ -14,7 +14,7 @@ public abstract class Entity {
     }
     
     public void removeEntity() {
-        area.removeEntity(this);
+        area.addEntityToDelete(this);
         currCell.removeEntity(this);
     }
 

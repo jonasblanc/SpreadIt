@@ -34,5 +34,14 @@ public class HealtyEntity extends MovableEntity {
             break;
         }
     }
+
+    @Override
+    public void getInfect() {
+        super.getGrid().removeEntity(this);
+        super.getCurrCell().removeEntity(this);
+        InfectedEntity e = new InfectedEntity(super.getPosX(), super.getPosY(), super.getGrid(), super.takeCellSpace());
+        super.getCurrCell().addEntity(e);
+        super.getGrid().addEntity(e);    
+    }
     
 }

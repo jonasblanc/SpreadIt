@@ -1,9 +1,13 @@
+import java.util.HashSet;
+import java.util.Set;
 
 public final class Grid {
 
     private Cell [][] grid;
     private final int sizeX;
     private final int sizeY;
+    
+    private Set<Entity> gridEntities = new HashSet<>();
     
     public Grid(int sizeX, int sizeY) {
         this.sizeX = sizeX;
@@ -25,11 +29,17 @@ public final class Grid {
     }
     
     public void update() {
+        for(Entity e : gridEntities) {
+            e.update();
+        }
+        
+        /*
         for(int x = 0; x<sizeX; ++x) {
             for(int y = 0; y < sizeY; ++y) {
                 grid[x][y].update();
             }
         }
+        */
     }
     
     public String toString() {
@@ -50,5 +60,13 @@ public final class Grid {
     
     public int getBorderY() {
         return sizeY;
+    }
+    
+    public void addEntity(Entity e) {
+        gridEntities.add(e);
+    }
+    
+    public void removeEntity(Entity e) {
+        gridEntities.remove(e);
     }
 }

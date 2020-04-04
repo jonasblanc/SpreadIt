@@ -35,4 +35,7 @@ public final class InfectedEntity extends MovableEntity {
         
     }
 
+    @Override
+    public void getInfect() {/*Do nothing*/}
+
 }

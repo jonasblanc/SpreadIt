@@ -1,5 +1,8 @@
 package Entities.LivingEntities;
+import java.util.Random;
+
 import Entities.House;
+import Entities.LivingEntities.Human.Action;
 import GameEnvironment.Grid;
 
 public class Elder extends Human {
@@ -30,6 +33,19 @@ public class Elder extends Human {
         globalMove();  
         spreadInfection();
         updateInfection();
+        
+        if(super.needToGoToHospital()) {
+            super.giveNewActions(Action.GT_HOSPITAL);
+        }else {
+            switch(time) {
+            case 100:
+                super.giveNewActions(Action.STROLL);
+                break;
+            case 170:
+                super.giveNewActions(Action.GT_HOME);
+                break;
+            }
+        }
     }
 
     @Override
@@ -39,17 +55,10 @@ public class Elder extends Human {
 
     @Override
     public void goalAchieved() {
-        // TODO Auto-generated method stub
+        super.giveNewActions(Action.STAY);
     }
 
-    /*
-    @Override
-    public void spreadInfection() {}
-    */
-    
-    /* 
-     * 
-     */
+
     @Override
     public void updateInfection() {
         if(isInfected()) {
@@ -60,7 +69,13 @@ public class Elder extends Human {
 
     @Override
     public void specificAction(Action a) {
-        // TODO Auto-generated method stub
+        switch(a) {
+        case STROLL:
+            int x = new Random().nextInt(super.getGrid().getBorderX());
+            int y = new Random().nextInt(super.getGrid().getBorderY());
+            super.setGoal(x, y); 
+            break;
+        }
         
     }
 

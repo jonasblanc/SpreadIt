@@ -32,7 +32,7 @@ public abstract class Human extends MovableEntity implements Infectable{
     }
     
     public enum Action{
-        GT_HOME, GT_HOSPITAL, STAY, GT_WORK, PLAY 
+        GT_HOME, GT_HOSPITAL, STAY, GT_WORK, PLAY, STROLL
     }
     
     public void giveNewActions(Action a) {

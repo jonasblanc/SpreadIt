@@ -1,12 +1,12 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class Cell {
     private final int x;
     private final int y;
     private final Grid ownerGrid;
     
-    private List<Entity> entities = new ArrayList<>();
+    private Set<Entity> entities = new HashSet<>();
     
     public Cell(int posX, int posY, Grid grid) {
         x = posX;
@@ -60,8 +60,16 @@ public final class Cell {
    
    @Override
    public String toString() {
-       return entities.isEmpty() ? "." : entities.get(0).toString();
+       
+       if (entities.isEmpty()) {
+           return " ";
+       }
+       else {
+           StringBuilder sb = new StringBuilder();
+           for(Entity e:entities){
+               sb.append(e.toString());
+           }
+           return sb.toString();
+       }
    }
-
-    
 }

@@ -3,6 +3,7 @@ public final class Adult extends Human {
 
     public Adult(int x, int y, Grid aera) {
         super(x, y, aera);
+        super.setGoal(9,9);
     }
 
     @Override
@@ -13,19 +14,30 @@ public final class Adult extends Human {
 
     @Override
     public boolean takeCellSpace() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        return null;
+        return "A";
     }
 
     @Override
     public void update() {
-        int x = super.getPosX();
+        globalMove();
+    }
+
+    @Override
+    public int getDistanceByMove() {
+        return 1;
+    }
+
+    @Override
+    public void moveWhenNotFollowingAGoal() {
+       
+        randomMove();
+        /*
+          int x = super.getPosX();
         int y = super.getPosY();
         Grid grid = super.getGrid();
         
@@ -49,7 +61,12 @@ public final class Adult extends Human {
         default:
             break;
         }
-        
+         */
+    }
+
+    @Override
+    public void goalAchived(int x, int y) {
+        //Do nothing for now
     }
 
 }

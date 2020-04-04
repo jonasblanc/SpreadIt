@@ -5,15 +5,10 @@ public final class Main {
     
     public static void main(String[] args) {
         Grid g = new Grid(10, 10);
-        HealtyEntity h = new HealtyEntity(5,5,g,true);
-        g.getCell(5,5).addEntity(h);
-        g.addEntity(h);
-        Entity i = new InfectedEntity(7,7,g,true);
-        g.getCell(7,7).addEntity(i);
-        g.addEntity(i);
-        
-        boolean firstTime = true;
-        
+        Adult a = new Adult(5,5,g);
+        g.getCell(5,5).addEntity(a);
+        g.addEntity(a);
+               
         long lastTime = System.nanoTime();
         while(true) {
             long currentTime = System.nanoTime();
@@ -21,11 +16,6 @@ public final class Main {
                g.update();
                 System.out.println(g.toString());
                 lastTime = currentTime;
-                
-                if(firstTime) {
-                    h.getInfect();
-                    firstTime = false;
-                }
             }
            
         }

@@ -62,19 +62,15 @@ public final class Grid {
         
     }
     
-    public int getBorderX() {
-        return sizeX;
-    }
-    
-    public int getBorderY() {
-        return sizeY;
-    }
-    
     public void addEntity(Entity e) {
         gridEntities.add(e);
     }
     
     public void removeEntity(Entity e) {
         gridEntities.remove(e);
+    }
+    
+    public boolean isInBorder(int x, int y) {
+        return (0 <= x && x < sizeX && 0 <= y && y < sizeY);
     }
 }

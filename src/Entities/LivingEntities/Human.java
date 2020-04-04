@@ -2,7 +2,6 @@ package Entities.LivingEntities;
 import java.util.Random;
 import java.util.Set;
 
-import Entities.Entity;
 import Entities.Hospital;
 import Entities.House;
 import Entities.Infectable;
@@ -73,15 +72,14 @@ public abstract class Human extends MovableEntity implements Infectable{
     @Override
     public void spreadInfection () {
         if(isInfected()){
-            Set <Entity> adjacentEntities=  getCurrCell().getRadiusEntities(1);
-            adjacentEntities.remove(this);
-            for(Entity e:adjacentEntities) {
-                if(e instanceof Infectable) {
-                    ((Infectable) e).infect(false);
+            Set <Infectable> adjacentInfectables=getCurrCell().getRadiusInfectables(1);
+            adjacentInfectables.remove(this);
+            for(Infectable e:adjacentInfectables) {
+                    e.infect(false);
                 }
             }
         }
-    }
+    
     
     /**
      * Updates the virus dose in the individual

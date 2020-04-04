@@ -18,7 +18,7 @@ public final class House extends Buildings {
     }
 
     @Override
-    public void update() {
+    public void update(int time) {
         // TODO Auto-generated method stub
     }
 

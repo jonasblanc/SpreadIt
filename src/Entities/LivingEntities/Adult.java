@@ -2,6 +2,7 @@ package Entities.LivingEntities;
 import java.util.Random;
 
 import Entities.House;
+import Entities.WorkPlace;
 import GameEnvironment.Grid;
 
 public final class Adult extends Human {
@@ -18,7 +19,7 @@ public final class Adult extends Human {
         if(infected) {
             infect(true);
         }
-        workPlace = wp;
+        this.workPlace = wp;
     }
 
     @Override

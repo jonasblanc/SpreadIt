@@ -26,7 +26,7 @@ public class WorkPlace extends Buildings{
 
 
     @Override
-    public void update() { 
+    public void update(int time) { 
     }
 
 }

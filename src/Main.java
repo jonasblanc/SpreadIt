@@ -1,9 +1,9 @@
 
-import GameEnvironment.Grid;
 import Entities.House;
+import Entities.WorkPlace;
 import Entities.LivingEntities.Adult;
 import Entities.LivingEntities.Child;
-import Entities.LivingEntities.Elder;
+import GameEnvironment.Grid;
 
 public final class Main {
 

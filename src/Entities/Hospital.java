@@ -29,7 +29,7 @@ public final class Hospital extends Buildings {
     }
 
     @Override
-    public void update() {
+    public void update(int time) {
         
         for( Human human : getCurrCell().getHumans()) {
             human.increaseVirus(1.0f/healPower);

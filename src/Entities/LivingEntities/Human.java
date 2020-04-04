@@ -11,6 +11,9 @@ import GameEnvironment.Grid;
 public abstract class Human extends MovableEntity implements Infectable{
 
     private final static float TRESHOLD_TO_HEAL=1;
+    private final static float SYMPTOM_DETECTION_TRESHOLD= 0.25f;
+    private final static float INITIAL_INFECTION_FACTOR = 0.10f;
+    
     
     private float infectionProbability;
     private float virusQuantity;//Dose of the virus in the human in percentage
@@ -67,8 +70,8 @@ public abstract class Human extends MovableEntity implements Infectable{
     public boolean infect(boolean forced) {
         
        //Generate random number between 0(inclusive) and 100 (exclusive)for probability 
-       if(forced || ((float)new Random().nextInt(100))/100<infectionProbability) {
-           virusQuantity=maxVirusQuantity/2;
+       if(!isInfected() && (forced || ((float)new Random().nextInt(100))/100<infectionProbability)) {
+           virusQuantity=maxVirusQuantity*INITIAL_INFECTION_FACTOR;
            System.out.println("A human got infected");
        }
        return isInfected();
@@ -100,7 +103,7 @@ public abstract class Human extends MovableEntity implements Infectable{
     }
        
     public boolean hasSymptom() {
-        return virusQuantity>= maxVirusQuantity/4;
+        return virusQuantity>= maxVirusQuantity*SYMPTOM_DETECTION_TRESHOLD;
     }
     
     public boolean isDead() {

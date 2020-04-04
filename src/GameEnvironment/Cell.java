@@ -5,7 +5,9 @@ import java.util.stream.Collectors;
 
 import Entities.Entity;
 import Entities.Hospital;
+import Entities.House;
 import Entities.Infectable;
+import Entities.WorkPlace;
 import Entities.LivingEntities.Human;
 
 public final class Cell {
@@ -87,6 +89,24 @@ public final class Cell {
     public boolean hasHospital() {
         for(Entity e: entities) {
             if(e instanceof Hospital) {
+               return true;
+            }
+        }
+       return false;
+    }
+    
+    public boolean hasHouse() {
+        for(Entity e: entities) {
+            if(e instanceof House) {
+               return true;
+            }
+        }
+       return false;
+    }
+    
+    public boolean hasWorkPlace() {
+        for(Entity e: entities) {
+            if(e instanceof WorkPlace) {
                return true;
             }
         }

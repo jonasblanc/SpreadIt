@@ -35,9 +35,9 @@ public final class Grid {
         return grid[x][y];
     }
     
-    public void update() {
+    public void update(int time) {
         for(Entity e : gridEntities) {
-            e.update();
+            e.update(time);
         }
         gridEntities.removeAll(toDelete);
         toDelete.clear();

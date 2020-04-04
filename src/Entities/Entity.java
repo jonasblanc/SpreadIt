@@ -25,7 +25,7 @@ public abstract class Entity {
     
     public abstract String toString();
     
-    public abstract void update();
+    public abstract void update(int time);
 
     public int getPosX() {
         return posX;
@@ -54,4 +54,5 @@ public abstract class Entity {
     public void setCurrCell(Cell currCell) {
         this.currCell = currCell;
     }
+
 }

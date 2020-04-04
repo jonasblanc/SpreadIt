@@ -24,7 +24,7 @@ public abstract class MovableEntity extends Entity {
         
     public abstract void moveWhenNotFollowingAGoal();
     
-    public abstract void goalAchived(int x, int y);
+    public abstract void goalAchived();
     
 
     public static enum Dir{
@@ -40,7 +40,7 @@ public abstract class MovableEntity extends Entity {
             if(isFollowingAGoal) {
                 if(moveTowardGoal()) {
                     isFollowingAGoal = false;
-                    goalAchived(goalX, goalY);
+                    goalAchived();
                     return;
                 }
             }else {
@@ -162,4 +162,7 @@ public abstract class MovableEntity extends Entity {
         this.direction = direction;
     }
 
+    public void setIsFollowingAGoal(boolean b) {
+        isFollowingAGoal = b;
+    }
 }

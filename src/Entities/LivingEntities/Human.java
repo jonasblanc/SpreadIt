@@ -70,7 +70,7 @@ public abstract class Human extends MovableEntity implements Infectable{
     public boolean infect(boolean forced) {
         
        //Generate random number between 0(inclusive) and 100 (exclusive)for probability 
-       if(forced || ((float)new Random().nextInt(100))/100<infectionProbability) {
+       if(!isInfected() && (forced || ((float)new Random().nextInt(100))/100<infectionProbability)) {
            virusQuantity=maxVirusQuantity*INITIAL_INFECTION_FACTOR;
            System.out.println("A human got infected");
        }

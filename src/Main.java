@@ -1,4 +1,9 @@
 
+import GameEnvironnement.Grid;
+import Entities.LivingEntities.Adult;
+import Entities.LivingEntities.Child;
+import Entities.LivingEntities.Elder;
+
 public final class Main {
 
     private final static float TIME_TRESHOLD = 500000000;

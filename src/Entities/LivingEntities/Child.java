@@ -1,11 +1,17 @@
-public final class Adult extends Human {
+package Entities.LivingEntities;
+import java.util.Random;
+
+import GameEnvironnement.Grid;
+
+
+
+public final class Child  extends Human {
     
-    private final static float INFECTION_PROBABILITY=0.5f; 
+    private final static float INFECTION_PROBABILITY=0.25f; 
     private final static float MAX_VIRUS_QUANTITY=100.0f; 
-    private final static float VIRUS_INCREASE=1.25f; 
-    
-    
-    public Adult(int x, int y, Grid aera, boolean infected) {
+    private final static float VIRUS_INCREASE=1.05f; 
+
+    public Child(int x, int y, Grid aera, boolean infected) {
         super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY);  
         if(infected) {
             infect(true);
@@ -19,15 +25,16 @@ public final class Adult extends Human {
 
     @Override
     public String toString() {
-        return isInfected() ? "a":"A";
+        return isInfected() ? "c":"C";
     }
 
     @Override
-    public void update() {
+    public void update() { 
         globalMove();
         spreadInfection();
         updateInfection();
     }
+ 
 
     @Override
     public int getDistanceByMove() {
@@ -36,17 +43,23 @@ public final class Adult extends Human {
 
     @Override
     public void moveWhenNotFollowingAGoal() {
-       
-        randomMove();
+        int x = new Random().nextInt(super.getGrid().getBorderX());    
+        int y = new Random().nextInt(super.getGrid().getBorderX());    
+        setGoal(x,y);
     }
 
     @Override
     public void goalAchived(int x, int y) {
-        //Do nothing for now
+        //Do nothing yet
     }
 
+    /* 
+     * 
+     */
     /*@Override
-    public void spreadInfection() {}*/
+    public void spreadInfection() {
+        // TODO Auto-generated method stub 
+    }*/
 
     /* 
      * 
@@ -56,6 +69,7 @@ public final class Adult extends Human {
         if(isInfected()) {
             increaseVirus(VIRUS_INCREASE);
         }
+        
     }
 
 }

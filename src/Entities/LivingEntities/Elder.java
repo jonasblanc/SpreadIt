@@ -1,3 +1,5 @@
+package Entities.LivingEntities;
+import GameEnvironnement.Grid;
 
 public class Elder extends Human {
     

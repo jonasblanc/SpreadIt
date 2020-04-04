@@ -1,6 +1,9 @@
+package GameEnvironnement;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import Entities.Entity;
 
 public final class Cell {
     private final int x;

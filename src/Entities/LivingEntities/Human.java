@@ -1,5 +1,11 @@
+package Entities.LivingEntities;
 import java.util.Random;
 import java.util.Set;
+
+import Entities.Entity;
+import Entities.Infectable;
+import Entities.MovableEntity;
+import GameEnvironnement.Grid;
 
 public abstract class Human extends MovableEntity implements Infectable{
 

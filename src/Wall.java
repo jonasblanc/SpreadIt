@@ -1,3 +1,5 @@
+import Entities.Entity;
+import GameEnvironnement.Grid;
 
 public class Wall extends Entity{
 

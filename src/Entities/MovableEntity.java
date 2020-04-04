@@ -21,10 +21,8 @@ public abstract class MovableEntity extends Entity {
     }
         
     public abstract int getDistanceByMove();
-        
-    public abstract void moveWhenNotFollowingAGoal();
-    
-    public abstract void goalAchived();
+            
+    public abstract void goalAchieved();
     
 
     public static enum Dir{
@@ -40,11 +38,9 @@ public abstract class MovableEntity extends Entity {
             if(isFollowingAGoal) {
                 if(moveTowardGoal()) {
                     isFollowingAGoal = false;
-                    goalAchived();
+                    goalAchieved();
                     return;
                 }
-            }else {
-                moveWhenNotFollowingAGoal();
             }
             
         }

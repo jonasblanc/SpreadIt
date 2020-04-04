@@ -45,6 +45,9 @@ public final class Child  extends Human {
                 break;
             }
         }
+        if(super.getCurrentAction() == Action.PLAY) {
+            randomMove();
+        }
     }
  
 
@@ -54,12 +57,7 @@ public final class Child  extends Human {
     }
 
     @Override
-    public void moveWhenNotFollowingAGoal() {
-        randomMove();
-    }
-
-    @Override
-    public void goalAchived() {
+    public void goalAchieved() {
        super.giveNewActions(Action.STAY);
     }
 

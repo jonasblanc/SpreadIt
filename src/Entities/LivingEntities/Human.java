@@ -16,7 +16,7 @@ public abstract class Human extends MovableEntity implements Infectable{
     private float virusQuantity;//Dose of the virus in the human in percentage
     private float maxVirusQuantity;
     
-    private Action current = Action.STAY;
+    private Action currentAction= Action.STAY;
     private House home;
     
     public Human(int x, int y, Grid aera, float infectionProbability,float maxVirusQuantity, House h) {
@@ -33,18 +33,27 @@ public abstract class Human extends MovableEntity implements Infectable{
     }
     
     public void giveNewActions(Action a) {
+        setCurrentAction(a);
         switch(a) {
         case GT_HOME: 
-            super.setGoal(home.getPosX(), home.getPosY()); break;
+            super.setGoal(home.getPosX(), home.getPosY()); 
+            break;
         case GT_HOSPITAL: 
             Hospital hospital = super.getGrid().getNearestHospital(super.getPosX(), super.getPosY());
-            super.setGoal(hospital.getPosX(), hospital.getPosY()); break;
+            if(hospital != null) {
+                super.setGoal(hospital.getPosX(), hospital.getPosY());
+            }else {
+                super.setGoal(home.getPosX(), home.getPosY());
+                setCurrentAction(Action.GT_HOME);
+            }
+            break;
+           
         case STAY: 
-            super.setGoal(super.getPosX(), super.getPosY()); break;
+            break;
         default:
             specificAction(a);
         }
-        current = a;
+       
     }
     
     public abstract void specificAction(Action a);
@@ -91,7 +100,7 @@ public abstract class Human extends MovableEntity implements Infectable{
     }
        
     public boolean hasSymptom() {
-        return virusQuantity>=1/4*maxVirusQuantity;
+        return virusQuantity>= maxVirusQuantity/4;
     }
     
     public boolean isDead() {
@@ -99,7 +108,7 @@ public abstract class Human extends MovableEntity implements Infectable{
     }
     
     public boolean isOrIsGoingHospital() {
-        return super.getCurrCell().hasHospital() || current == Action.GT_HOSPITAL;
+        return super.getCurrCell().hasHospital() || currentAction == Action.GT_HOSPITAL;
     }
     
     /**
@@ -119,11 +128,11 @@ public abstract class Human extends MovableEntity implements Infectable{
     }
     
     public Action getCurrentAction() {
-        return current;
+        return currentAction;
     }
     
     public void setCurrentAction(Action a) {
-        current = a;
+        currentAction = a;
     }
     
 }

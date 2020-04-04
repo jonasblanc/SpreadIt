@@ -38,12 +38,7 @@ public class Elder extends Human {
     }
 
     @Override
-    public void moveWhenNotFollowingAGoal() {
-        //Doesn't move when no goal
-    }
-
-    @Override
-    public void goalAchived() {
+    public void goalAchieved() {
         // TODO Auto-generated method stub
     }
 

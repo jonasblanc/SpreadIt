@@ -40,7 +40,7 @@ public final class Main {
         g.addEntity(a2);
         
         Child c2 = new Child(0,9,g,false, h1);
-        g.getCell(1,2).addEntity(c2);
+        g.getCell(0,9).addEntity(c2);
         g.addEntity(c2);
         
         long lastTime = System.nanoTime();
@@ -49,14 +49,16 @@ public final class Main {
             
             long currentTime = System.nanoTime();
             if(currentTime-lastTime > TIME_TRESHOLD) {
+                System.out.println(time);
                 System.out.println(g.toString());
                 g.update(time);
                 lastTime = currentTime;
+                time ++;
+                if(time == 241) {
+                    time = 0;
+                }
             }
-            time ++;
-            if(time == 241) {
-                time = 0;
-            }
+           
            
         }
     }

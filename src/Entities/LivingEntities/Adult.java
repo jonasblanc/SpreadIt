@@ -37,12 +37,15 @@ public final class Adult extends Human {
         globalMove();
         spreadInfection();
         updateInfection();
+        
         if(super.needToGoToHospital()) {
             super.giveNewActions(Action.GT_HOSPITAL);
+            System.out.println("Should go to hospital");
         }else {
             switch(time) {
             case 80:
                 super.giveNewActions(Action.GT_WORK);
+                System.out.println("GO WORK");
                 break;
             case 180:
                 super.giveNewActions(Action.GT_HOME);
@@ -59,14 +62,7 @@ public final class Adult extends Human {
     }
 
     @Override
-    public void moveWhenNotFollowingAGoal() {
-        int x = new Random().nextInt(super.getGrid().getBorderX());    
-        int y = new Random().nextInt(super.getGrid().getBorderX());    
-        setGoal(x,y);
-    }
-
-    @Override
-    public void goalAchived() {
+    public void goalAchieved() {
         super.giveNewActions(Action.STAY);
     }
 

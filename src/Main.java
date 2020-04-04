@@ -1,9 +1,7 @@
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import Entities.Hospital;
 import Entities.House;
@@ -57,11 +55,13 @@ public final class Main {
         long lastTime = System.nanoTime();
         int time = 0;
         int day = 0;
+        int initialEntitiesCount = grid.howManyHuman();
         while(true) {
             
             long currentTime = System.nanoTime();
             if(currentTime-lastTime > TIME_TRESHOLD) {
-                System.out.println("Day: "+ day + " Time: "+time);
+                printStat(grid, initialEntitiesCount, day, time);
+                
                 System.out.println(grid.toString());
                 grid.update(time);
                 lastTime = currentTime;
@@ -74,6 +74,19 @@ public final class Main {
            
            
         }
+    }
+    
+    private static void printStat(Grid grid, int initialEntitiesCount, int day, int time) {
+        int currentNumber = grid.howManyHuman();
+        int infected = grid.howManyInfected();
+        int dead = initialEntitiesCount - currentNumber;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Day: "+ day)
+        .append(" Time: "+time)
+        .append(" Infected: "+infected)
+        .append(" Alive: "+ currentNumber)
+        .append(" Dead: "+ dead);
+        System.out.println(sb.toString());
     }
     
     private static void generateMap(Grid grid) {

@@ -34,6 +34,7 @@ public abstract class Human extends MovableEntity implements Infectable{
        //Generate random number between 0(inclusive) and 100 (exclusive)for probability 
        if(forced || ((float)new Random().nextInt(100))/100<infectionProbability) {
            virusQuantity=maxVirusQuantity/2;
+           System.out.println("A human got infected");
        }
        return isInfected();
     }
@@ -73,8 +74,8 @@ public abstract class Human extends MovableEntity implements Infectable{
         virusQuantity=virusQuantity*scale;
         
         if(isDead()) {
-            System.out.println("I DIED");
-            //removeEntity();
+            System.out.println("A human died");
+            removeEntity();
         }
     }
     

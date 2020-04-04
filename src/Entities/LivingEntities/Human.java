@@ -118,11 +118,13 @@ public abstract class Human extends MovableEntity implements Infectable{
      * @param scale: the scale by which the virus is increased (if scale<1 => the virus is decreased) 
      */
     public void increaseVirus(float scale) {
-        virusQuantity=virusQuantity*scale;
-        
-        if(isDead()) {
-            System.out.println("A human died");
-            removeEntity();
+        if(isInfected()) {
+            virusQuantity=virusQuantity*scale;
+            
+            if(isDead()) {
+                System.out.println("A human died");
+                removeEntity();
+            }
         }
     }
     

@@ -2,7 +2,7 @@
 public final class InfectedEntity extends MovableEntity {
 
     public InfectedEntity(int x, int y, Grid aera, boolean takeCellSpace) {
-        super(x, y, aera, takeCellSpace, "x");
+        super(x, y, aera);
         super.setDirection(Dir.DOWN);
     }
 
@@ -37,5 +37,16 @@ public final class InfectedEntity extends MovableEntity {
 
     @Override
     public void getInfect() {/*Do nothing*/}
+    
+    @Override
+    public String toString() {
+        return "x";
+        
+    }
+
+    @Override
+    public boolean takeCellSpace() {
+        return false;
+    }
 
 }

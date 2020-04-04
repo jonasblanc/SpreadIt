@@ -2,8 +2,8 @@
 public class HealtyEntity extends MovableEntity {
 
     
-    public HealtyEntity(int x, int y, Grid aera, boolean takeCellSpace) {
-        super(x, y, aera, takeCellSpace, "+");
+    public HealtyEntity(int x, int y, Grid area, boolean takeCellSpace) {
+        super(x, y, area);
     }
 
     @Override
@@ -39,9 +39,19 @@ public class HealtyEntity extends MovableEntity {
     public void getInfect() {
         super.getGrid().removeEntity(this);
         super.getCurrCell().removeEntity(this);
-        InfectedEntity e = new InfectedEntity(super.getPosX(), super.getPosY(), super.getGrid(), super.takeCellSpace());
+        InfectedEntity e = new InfectedEntity(super.getPosX(), super.getPosY(), super.getGrid(), takeCellSpace());
         super.getCurrCell().addEntity(e);
         super.getGrid().addEntity(e);    
+    }
+
+    @Override
+    public boolean takeCellSpace() {
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "+";
     }
     
 }

@@ -3,25 +3,19 @@ public abstract class Entity {
 
     private  int posX;
     private int posY;
-    private Grid aera;
-    private boolean takeCellSpace; 
+    private Grid area;
     private Cell currCell;
-    
-    private String printChar;
-    
-    public Entity(int x, int y, Grid aera, boolean takeCellSpace, String printChar) {
+       
+    public Entity(int x, int y, Grid area) {
         setPosX(x);
         setPosY(y);
-        this.aera = aera;
-        this.takeCellSpace = takeCellSpace;
-        setCurrCell(aera.getCell(x, y));
-        this.printChar = printChar;
+        this.area = area;
+        setCurrCell(area.getCell(x, y));
     }
 
-    public boolean takeCellSpace() {
-        return takeCellSpace;
-    }
+    public abstract boolean takeCellSpace();
     
+    public abstract String toString();
     
     public abstract void update();
 
@@ -42,7 +36,7 @@ public abstract class Entity {
     }
 
     public Grid getGrid() {
-        return aera;
+        return area;
     }
 
     public Cell getCurrCell() {
@@ -52,9 +46,4 @@ public abstract class Entity {
     public void setCurrCell(Cell currCell) {
         this.currCell = currCell;
     }
-    
-    public String toString() {
-        return printChar;
-    }
-
 }

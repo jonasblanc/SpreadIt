@@ -4,8 +4,8 @@ public abstract class MovableEntity extends Entity {
     
     private Dir direction = Dir.LEFT;
 
-    public MovableEntity(int x, int y, Grid aera, boolean takeCellSpace, String printChar) {
-        super(x, y, aera, takeCellSpace, printChar);
+    public MovableEntity(int x, int y, Grid aera) {
+        super(x, y, aera);
     }
     
     public Dir getDirection() {

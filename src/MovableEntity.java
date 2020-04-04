@@ -14,9 +14,7 @@ public abstract class MovableEntity extends Entity {
         goalX = x;
         goalX = y; 
     }
-    
-    public abstract void getInfect();
-    
+        
     public abstract int getDistanceByMove();
         
     public abstract void moveWhenNotFollowingAGoal();

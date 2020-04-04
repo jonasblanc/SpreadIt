@@ -39,9 +39,4 @@ public final class Child  extends Human {
         //Do nothing yet
     }
 
-    @Override
-    public void getInfect() {
-        // TODO Auto-generated method stub
-        
-    }
 }

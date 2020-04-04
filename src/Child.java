@@ -1,9 +1,18 @@
 import java.util.Random;
 
-public final class Child  extends Human {
 
-    public Child(int x, int y, Grid aera) {
-        super(x, y, aera);
+
+public final class Child  extends Human {
+    
+    private final static float INFECTION_PROBABILITY=0.1f; 
+    private final static float MAX_VIRUS_QUANTITY=100.0f; 
+    private final static float VIRUS_INCREASE=1.05f; 
+
+    public Child(int x, int y, Grid aera, boolean infected) {
+        super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY);  
+        if(infected) {
+            infect(true);
+        }
     }
 
     @Override
@@ -13,12 +22,13 @@ public final class Child  extends Human {
 
     @Override
     public String toString() {
-        return "C";
+        return isInfected() ? "c":"C";
     }
 
     @Override
     public void update() { 
         globalMove();
+        spreadInfection();
     }
  
 
@@ -37,6 +47,25 @@ public final class Child  extends Human {
     @Override
     public void goalAchived(int x, int y) {
         //Do nothing yet
+    }
+
+    /* 
+     * 
+     */
+    /*@Override
+    public void spreadInfection() {
+        // TODO Auto-generated method stub 
+    }*/
+
+    /* 
+     * 
+     */
+    @Override
+    public void updateInfection() {
+        if(isInfected()) {
+            increaseVirus(VIRUS_INCREASE);
+        }
+        
     }
 
 }

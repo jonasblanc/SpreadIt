@@ -1,8 +1,13 @@
 public final class Adult extends Human {
     
-    public Adult(int x, int y, Grid aera, boolean isInfected) {
-        super(x, y, aera, 0.5f, 100.0f);  
-        if(isInfected) {
+    private final static float INFECTION_PROBABILITY=0.5f; 
+    private final static float MAX_VIRUS_QUANTITY=100.0f; 
+    private final static float VIRUS_INCREASE=1.25f; 
+    
+    
+    public Adult(int x, int y, Grid aera, boolean infected) {
+        super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY);  
+        if(infected) {
             infect(true);
         }
     }
@@ -20,6 +25,7 @@ public final class Adult extends Human {
     @Override
     public void update() {
         globalMove();
+        spreadInfection();
     }
 
     @Override
@@ -31,32 +37,6 @@ public final class Adult extends Human {
     public void moveWhenNotFollowingAGoal() {
        
         randomMove();
-        /*
-          int x = super.getPosX();
-        int y = super.getPosY();
-        Grid grid = super.getGrid();
-        
-        Dir dir = super.getDirection();
-        
-        switch(dir) {
-            case DOWN:
-                if  (y > 0) {
-                    super.moveTo(x, y-1);
-                 }else {
-                     super.setDirection(Dir.UP);
-                 }
-                break;
-            case UP:
-                if  (y < grid.getBorderY()-1) {
-                    super.moveTo(x, y+1);
-                 }else {
-                     super.setDirection(Dir.DOWN);
-                 }
-                break;
-        default:
-            break;
-        }
-         */
     }
 
     @Override
@@ -64,13 +44,8 @@ public final class Adult extends Human {
         //Do nothing for now
     }
 
-    /* 
-     * 
-     */
-    @Override
-    public void spreadInfection() {
-        
-    }
+    /*@Override
+    public void spreadInfection() {}*/
 
     /* 
      * 
@@ -78,7 +53,7 @@ public final class Adult extends Human {
     @Override
     public void updateInfection() {
         if(isInfected()) {
-            increaseVirus(1.25f);
+            increaseVirus(VIRUS_INCREASE);
         }
     }
 

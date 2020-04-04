@@ -1,9 +1,26 @@
 
-public final class InfectedEntity extends MovableEntity {
+public final class Adult extends Human {
 
-    public InfectedEntity(int x, int y, Grid aera, boolean takeCellSpace) {
+    public Adult(int x, int y, Grid aera) {
         super(x, y, aera);
-        super.setDirection(Dir.DOWN);
+    }
+
+    @Override
+    public void getInfect() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public boolean takeCellSpace() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
@@ -33,20 +50,6 @@ public final class InfectedEntity extends MovableEntity {
             break;
         }
         
-    }
-
-    @Override
-    public void getInfect() {/*Do nothing*/}
-    
-    @Override
-    public String toString() {
-        return "x";
-        
-    }
-
-    @Override
-    public boolean takeCellSpace() {
-        return false;
     }
 
 }

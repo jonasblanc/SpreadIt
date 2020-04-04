@@ -35,5 +35,7 @@ public abstract class MovableEntity extends Entity {
         return false;
     }
     
+     
+    
     public abstract void getInfect();
 }

@@ -6,27 +6,33 @@ public class Elder extends Human {
     }
 
     @Override
-    public void getInfect() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
     public boolean takeCellSpace() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        return null;
+        return "E";
     }
 
     @Override
     public void update() {
+        globalMove();     
+    }
+
+    @Override
+    public int getDistanceByMove() {
+        return 1;
+    }
+
+    @Override
+    public void moveWhenNotFollowingAGoal() {
+        //Doesn't move when no goal
+    }
+
+    @Override
+    public void goalAchived(int x, int y) {
         // TODO Auto-generated method stub
-        
     }
 
 }

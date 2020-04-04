@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public final class Child  extends Human {
 
@@ -6,49 +7,41 @@ public final class Child  extends Human {
     }
 
     @Override
-    public void getInfect() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
     public boolean takeCellSpace() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        return null;
+        return "C";
     }
 
     @Override
     public void update() { 
-        int x = super.getPosX();
-        int y = super.getPosY();
-        Grid grid = super.getGrid();
+        globalMove();
+    }
+ 
+
+    @Override
+    public int getDistanceByMove() {
+        return 1;
+    }
+
+    @Override
+    public void moveWhenNotFollowingAGoal() {
+        int x = new Random().nextInt(super.getGrid().getBorderX());    
+        int y = new Random().nextInt(super.getGrid().getBorderX());    
+        setGoal(x,y);
+    }
+
+    @Override
+    public void goalAchived(int x, int y) {
+        //Do nothing yet
+    }
+
+    @Override
+    public void getInfect() {
+        // TODO Auto-generated method stub
         
-        Dir dir = super.getDirection();
-        
-        
-        switch(dir) {
-            case LEFT:
-                if  (x > 0) {
-                    super.moveTo(x-1, y);
-                 }else {
-                     super.setDirection(Dir.RIGHT);
-                 }
-                break;
-            case RIGHT:
-                if  (x < grid.getBorderX()-1) {
-                    super.moveTo(x+1, y);
-                 }else {
-                     super.setDirection(Dir.LEFT);
-                 }
-                break;
-        default:
-            break;
-        }
     }
 }

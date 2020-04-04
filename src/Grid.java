@@ -62,6 +62,14 @@ public final class Grid {
         
     }
     
+    public int getBorderX() {
+        return sizeX;
+    }
+    
+    public int getBorderY() {
+        return sizeY;
+    }
+    
     public void addEntity(Entity e) {
         gridEntities.add(e);
     }

@@ -9,7 +9,7 @@ public final class House extends Buildings {
 
     @Override
     public boolean takeCellSpace() {
-        return false;
+        return isFull();
     }
 
     @Override

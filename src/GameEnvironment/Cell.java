@@ -4,6 +4,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import Entities.Entity;
+import Entities.Hospital;
+import Entities.Infectable;
+import Entities.LivingEntities.Human;
 
 public final class Cell {
     private final int x;
@@ -46,6 +49,17 @@ public final class Cell {
         return new HashSet<>(entities);
     }
     
+    public Set<Human> getHumans(){
+        Set<Human> humans = new HashSet<>();
+        
+        for(Entity e: entities) {
+            if(e instanceof Human) {
+                humans.add((Human) e);
+            }
+        }
+        return humans;
+    }
+    
     /**
      * Return the entities in a radius r
      * @param r - radius
@@ -55,6 +69,28 @@ public final class Cell {
         Set<Cell> cells = getRadiusCells(r);
         Set<Entity> es = cells.stream().flatMap(c -> c.getEntities().stream()).collect(Collectors.toSet());
         return es;
+    }
+    
+    public Set<Infectable> getRadiusInfectables (int r){
+        
+        Set<Entity> es =getRadiusEntities(r);
+        Set<Infectable> infectables = new HashSet<>();
+        
+        for(Entity e: es) {
+            if(e instanceof Infectable) {
+                infectables.add((Infectable) e);
+            }
+        }
+        return infectables;
+    }
+    
+    public boolean hasHospital() {
+        for(Entity e: entities) {
+            if(e instanceof Hospital) {
+               return true;
+            }
+        }
+       return false;
     }
     
     /**
@@ -133,5 +169,9 @@ public final class Cell {
            }
            return sb.toString();
        }
+   }
+   
+   public int getNumberOfEntities() {
+       return entities.size();
    }
 }

@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import Entities.Entity;
 import Entities.Hospital;
+import Entities.Infectable;
+import Entities.LivingEntities.Human;
 
 public final class Grid {
 
@@ -105,5 +107,18 @@ public final class Grid {
     
     public void addEntityToDelete(Entity e) {
         toDelete.add(e);
+    }
+    
+    public int howManyInfected() {
+        return gridEntities.stream().filter(e -> e instanceof Infectable && 
+                ((Infectable)e).isInfected()).collect(Collectors.toSet()).size();
+    }
+    
+    public int howManyHuman() {
+        return gridEntities.stream().filter(e -> e instanceof Human).collect(Collectors.toSet()).size();
+    }
+    
+    public int howManyEntites() {
+        return gridEntities.size();
     }
 }

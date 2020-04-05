@@ -8,8 +8,7 @@ import GameEnvironment.Grid;
 public abstract class MovableEntity extends Entity {
    
     private static final int NUMBER_TRIAL_RANDOM_MOVE = 5;
-    
-    private Dir direction;
+        
     private int goalX;
     private int goalY;
 
@@ -17,7 +16,6 @@ public abstract class MovableEntity extends Entity {
         super(x, y, aera);
         goalX = x;
         goalX = y; 
-        this.direction=Dir.LEFT;
     }
         
     /**
@@ -84,7 +82,6 @@ public abstract class MovableEntity extends Entity {
      * @return true if a move was made
      */
     private boolean moveOneStepTowardsGoal() {     
-        System.out.println("Move one step towards goal at coordinates:(x,y)=(" +getGoalX()+ ","+getGoalY()+")");
         int distRemainingX = Math.abs(goalX - super.getPosX());
         int distRemainingY = Math.abs(goalY - super.getPosY());
         if(distRemainingX == 0 && distRemainingY ==0) {
@@ -94,20 +91,16 @@ public abstract class MovableEntity extends Entity {
         boolean hasMoved = false;
         if(distRemainingX > distRemainingY) {
             if(goalX > super.getPosX()) {
-                direction = Dir.RIGHT;//TODO:DELETE
                 hasMoved= moveTowardDir(Dir.RIGHT);
             }else if(goalX <  super.getPosX()){
-                direction = Dir.LEFT;//TODO:DELETE
                 hasMoved= moveTowardDir(Dir.LEFT);
             }
         } 
         
         if(!hasMoved && distRemainingY!=0) {
             if(goalY > super.getPosY()) {
-                direction = Dir.UP;//TODO:DELETE
                 hasMoved= moveTowardDir(Dir.UP);
             }else if(goalY < super.getPosY()){
-                direction = Dir.DOWN;//TODO:DELETE
                 hasMoved= moveTowardDir(Dir.DOWN);
             }
         }
@@ -163,17 +156,8 @@ public abstract class MovableEntity extends Entity {
             int i = new Random().nextInt(Dir.values().length);
             Dir direction = Dir.values()[i];
             hasMoved = moveTowardDir(direction);
-            this.direction=direction;//TODO:DELETE
         }
        return hasMoved;
-    }
-    
-    public Dir getDirection() {
-        return direction;
-    }
-
-    public void setDirection(Dir direction) {
-        this.direction = direction;
     }
     
     /**

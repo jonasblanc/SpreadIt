@@ -83,9 +83,7 @@ public abstract class Human extends MovableEntity implements Infectable{
                 
             case GT_HOSPITAL: {
                 Hospital hospital = super.getGrid().getNearestHospital(super.getPosX(), super.getPosY());
-                System.out.println("New action: I need to go to the hospital");
                 if(hospital != null) {
-                    System.out.println("Hospital was found at coordinates (x,y)=("+hospital.getPosX()+","+hospital.getPosY()+")");
                     super.setGoalPosition(hospital.getPosX(), hospital.getPosY());
                     setCurrentAction(a);
                     return true;

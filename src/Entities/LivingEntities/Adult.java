@@ -40,7 +40,6 @@ public final class Adult extends Human {
         updateInfection();
         
         if(super.needToGoToHospital()) {
-            System.out.println("I don't feel well, it seems I need to go to the hospital");
             super.giveNewAction(Action.GT_HOSPITAL);
         }
         else if(!inHospital()) {

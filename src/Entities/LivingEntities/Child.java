@@ -10,6 +10,10 @@ public final class Child  extends Human {
     private final static float INFECTION_PROBABILITY=0.25f; 
     private final static float MAX_VIRUS_QUANTITY=100.0f; 
     private final static float VIRUS_INCREASE=1.01f; 
+    private final static int DISTANCE_PER_MOVE=1; 
+    private final static int TIME_TO_PLAY=90;
+    private final static int TIME_GO_HOME=180;
+    
 
     public Child(int x, int y, Grid aera, boolean infected, House home) {
         super(x, y, aera, INFECTION_PROBABILITY, MAX_VIRUS_QUANTITY, home);  
@@ -30,18 +34,18 @@ public final class Child  extends Human {
 
     @Override
     public void update(int time) { 
-        globalMove();
+        move();
         spreadInfection();
         updateInfection();
         if(super.needToGoToHospital()) {
-            super.giveNewActions(Action.GT_HOSPITAL);
-        }else if(!super.isInfected()) {
+            super.giveNewAction(Action.GT_HOSPITAL);
+        }else if(!inHospital()) {
             switch(time) {
-            case 90:
-                super.giveNewActions(Action.PLAY);
+            case TIME_TO_PLAY:
+                super.giveNewAction(Action.PLAY);
                 break;
-            case 180:
-                super.giveNewActions(Action.GT_HOME);
+            case TIME_GO_HOME:
+                super.giveNewAction(Action.GT_HOME);
                 break;
             }
         }
@@ -52,26 +56,20 @@ public final class Child  extends Human {
  
 
     @Override
-    public int getDistanceByMove() {
-        return 1;
+    public int getDistancePerMove() {
+        return DISTANCE_PER_MOVE;
     }
 
     @Override
-    public void goalAchieved() {
-       super.giveNewActions(Action.STAY);
+    public void goalHasBeenReached() {
+        
+        if(getCurrentAction()==Action.GT_HOSPITAL) {
+            super.giveNewAction(Action.STAY_AT_HOSPITAL);
+        }
+        
+        super.giveNewAction(Action.STAY);
     }
 
-    /* 
-     * 
-     */
-    /*@Override
-    public void spreadInfection() {
-        // TODO Auto-generated method stub 
-    }*/
-
-    /* 
-     * 
-     */
     @Override
     public void updateInfection() {
         if(isInfected()) {
@@ -81,13 +79,28 @@ public final class Child  extends Human {
     }
 
     @Override
-    public void specificAction(Action a) {
+    public boolean giveSpecificAction(Action a) {
         switch(a) {
-        case PLAY:
-            super.setIsFollowingAGoal(false);
-            super.setCurrentAction(Action.PLAY);
+            case PLAY:{
+                super.setCurrentAction(a);
+                return true;
+            }
+            default:{
+                return false;
+            }
         }
-        
     }
-
+    
+    @Override
+    public boolean moveSpecific(Action a) {
+        switch(a) {
+            case PLAY:{
+                randomMove();
+                return true;
+            }
+            default: {
+                return false;
+            }
+        }
+    }
 }

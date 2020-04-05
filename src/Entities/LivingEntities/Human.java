@@ -14,12 +14,13 @@ public abstract class Human extends MovableEntity implements Infectable{
     private final static float SYMPTOM_DETECTION_TRESHOLD= 0.25f;
     private final static float INITIAL_INFECTION_FACTOR = 0.10f;
     
+    private boolean hasBeenInfected;
     
     private float infectionProbability;
     private float virusQuantity;//Dose of the virus in the human in percentage
     private float maxVirusQuantity;
     
-    private Action currentAction= Action.STAY;
+    private Action currentAction;
     private House home;
     
     public Human(int x, int y, Grid aera, float infectionProbability,float maxVirusQuantity, House h) {
@@ -28,38 +29,87 @@ public abstract class Human extends MovableEntity implements Infectable{
         this.maxVirusQuantity=maxVirusQuantity;
         this.virusQuantity=0;
         this.home = h;
+        this.hasBeenInfected=false;
+        this.currentAction = Action.STAY;
 
     }
     
     public enum Action{
-        GT_HOME, GT_HOSPITAL, STAY, GT_WORK, PLAY, STROLL
+        GT_HOME, GT_HOSPITAL, STAY_AT_HOSPITAL, STAY, GT_WORK, PLAY, STROLL
     }
     
-    public void giveNewActions(Action a) {
-        setCurrentAction(a);
-        switch(a) {
-        case GT_HOME: 
-            super.setGoal(home.getPosX(), home.getPosY()); 
-            break;
-        case GT_HOSPITAL: 
-            Hospital hospital = super.getGrid().getNearestHospital(super.getPosX(), super.getPosY());
-            if(hospital != null) {
-                super.setGoal(hospital.getPosX(), hospital.getPosY());
-            }else {
-                super.setGoal(home.getPosX(), home.getPosY());
-                setCurrentAction(Action.GT_HOME);
+    public abstract boolean giveSpecificAction(Action a);
+    public abstract boolean moveSpecific(Action a);
+    
+    protected boolean move() {
+        
+        switch (currentAction) {
+            case GT_HOME: {
+                super.moveTowardsGoal();
+                return true;
+                
             }
-            break;
-           
-        case STAY: 
-            break;
-        default:
-            specificAction(a);
+            case GT_HOSPITAL:{
+                
+                System.out.println("Going to hospital at coordinates:(x,y)=(" +getGoalX()+ ","+getGoalY()+")");
+                System.out.println("My coordinates are:(x,y)=(" +getPosX()+ ","+getPosY()+")");
+                
+                super.moveTowardsGoal();
+                return true;
+            }
+            
+            case STAY:{//do nothing by default
+                return true;
+            }
+            
+            default:{
+                return moveSpecific (currentAction);
+            }
+        }   
+    }
+    
+    /**
+     * Give to the human a new action to do, it might change its goal coordinates accordingly
+     * @param a: the action to be given
+     * @return true if the action was made possible, otherwise, returns false and its current action remains unchanged
+     */
+    public boolean giveNewAction(Action a) {
+        switch(a) {
+            case GT_HOME:{ 
+                super.setGoalPosition(home.getPosX(), home.getPosY()); 
+                setCurrentAction(a);
+                return true;
+            }
+                
+            case GT_HOSPITAL: {
+                Hospital hospital = super.getGrid().getNearestHospital(super.getPosX(), super.getPosY());
+                System.out.println("New action: I need to go to the hospital");
+                if(hospital != null) {
+                    System.out.println("Hospital was found at coordinates (x,y)=("+hospital.getPosX()+","+hospital.getPosY()+")");
+                    super.setGoalPosition(hospital.getPosX(), hospital.getPosY());
+                    setCurrentAction(a);
+                    return true;
+                }
+            
+                else {
+                    return false;
+                }
+            }
+               
+            case STAY:
+            case STAY_AT_HOSPITAL:{
+                setCurrentAction(a);
+                return true;
+            }
+                
+            default:{//Delegate the execution of such an action to subclass
+                return giveSpecificAction(a);  
+            }
         }
        
     }
     
-    public abstract void specificAction(Action a);
+    
     
     @Override
     public boolean isInfected() {
@@ -70,9 +120,9 @@ public abstract class Human extends MovableEntity implements Infectable{
     public boolean infect(boolean forced) {
         
        //Generate random number between 0(inclusive) and 100 (exclusive)for probability 
-       if(!isInfected() && (forced || ((float)new Random().nextInt(100))/100<infectionProbability)) {
+       if(canBeInfected()  && (forced || ((float)new Random().nextInt(100))/100<infectionProbability)) {
            virusQuantity=maxVirusQuantity*INITIAL_INFECTION_FACTOR;
-           System.out.println("A human got infected");
+           hasBeenInfected=true;
        }
        return isInfected();
     }
@@ -122,14 +172,9 @@ public abstract class Human extends MovableEntity implements Infectable{
             virusQuantity=virusQuantity*scale;
             
             if(isDead()) {
-                System.out.println("A human died");
                 removeEntity();
             }
         }
-    }
-    
-    protected void setVirusQuantity(float qt) {
-        virusQuantity=qt;
     }
     
     public Action getCurrentAction() {
@@ -139,5 +184,18 @@ public abstract class Human extends MovableEntity implements Infectable{
     public void setCurrentAction(Action a) {
         currentAction = a;
     }
+    
+    public boolean isImmune() {
+        return hasBeenInfected && !isInfected();
+    }
+    
+    public boolean canBeInfected() {
+        return !isImmune() && !isInfected();
+    }
+  
+    public boolean inHospital() {
+        return currentAction==Action.STAY_AT_HOSPITAL;
+    }
+    
     
 }

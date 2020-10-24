@@ -50,9 +50,7 @@ public abstract class Human extends MovableEntity implements Infectable{
                 
             }
             case GT_HOSPITAL:{
-                
-                System.out.println("Going to hospital at coordinates:(x,y)=(" +getGoalX()+ ","+getGoalY()+")");
-                System.out.println("My coordinates are:(x,y)=(" +getPosX()+ ","+getPosY()+")");
+             
                 
                 super.moveTowardsGoal();
                 return true;

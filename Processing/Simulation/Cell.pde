@@ -247,7 +247,7 @@ public final class Cell {
       int numEntities = sortEntities.size();
       int humanPerRow =(int) Math.ceil(Math.sqrt(numEntities)); 
       int defaultHumanPerRow = CELL_SIZE/HUMAN_DIAMETER;
-      float scale = min(1, 0.5*(float)defaultHumanPerRow / humanPerRow) ;
+      float scale = min(1, (float)defaultHumanPerRow / humanPerRow) ;
        
       System.out.println("Cell: " +scale);
       int countX = 0; 

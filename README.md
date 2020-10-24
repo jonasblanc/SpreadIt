@@ -7,7 +7,7 @@ This repository contains [java version](src) which prints the simulation in the 
 The simulation takes place in a grid with houses, workplaces and hospitals. The population consists of children, adutls and elders. Each category has a different behaviour: playing around, going to work or enjoying a hot sunny day sitting on park bench. They share some common activities such as going at home at night or going to hospital if they are infected. Humans harun the risk of becoming infected every time they encounter an infected person. If they stay infected for too long, they die. To avoid a painfull death they must be treated in hospital, but be aware that hospitals have maximum capacity.
 
 ## Java version
-All simulation parameters are in [main](src/main.java) which is also used to run the simulation.
+All simulation parameters are in [Main](src/Main.java) which is also used to run the simulation.
 ### Console representation
 The grid is delimited by "*".
 
@@ -22,7 +22,7 @@ Buildings are surrounded by "()" if there are several entites inside:
   * "W" for workplaces
 
 ## Processing version
-All simulation parameters are in [Simulation](Processing/Simulation.pde) which is also used to run the simulation.
+All simulation parameters are in [Simulation](Processing/Simulation/Simulation.pde) which is also used to run the simulation.
 ### Processing representation
 
 Infected poeple have a yellow halo. The size of the entities scale if several entites are in the same cell.
